@@ -5,7 +5,36 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { NewsState } from "../slices/NewsSlice";
+import { Typography } from "@mui/material";
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
 
+  const isToday =
+    date.getDate() === now.getDate() &&
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === now.getFullYear();
+
+  const isYesterday =
+    date.getDate() === now.getDate() - 1 &&
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === now.getFullYear();
+
+  const time = date.toLocaleTimeString("ru-RU", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  if (isToday) return `Сегодня, в ${time}`;
+  if (isYesterday) return `Вчера, в ${time}`;
+
+  return (
+    date.toLocaleDateString("ru-RU", {
+      day: "numeric",
+      month: "long",
+    }) + `, в ${time}`
+  );
+};
 export const NewsList = ({
   setEditNews,
   news,
@@ -45,7 +74,16 @@ export const NewsList = ({
             </>
           }
         >
-          <ListItemText primary={newItem.title} />
+          <ListItemText
+            primary={newItem.title}
+            secondary={
+              <>
+                <Typography component="span" variant="body2" color="gray">
+                  Создано: {formatDate(newItem.created_at)}
+                </Typography>
+              </>
+            }
+          />
         </ListItem>
       ))}
     </List>
