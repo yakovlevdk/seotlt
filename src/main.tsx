@@ -4,11 +4,17 @@ import "./index.css";
 import App from "./App.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store.ts";
-
+import { BrowserRouter, Routes, Route } from "react-router";
+import { NewPage } from "./pages/NewPage.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path=":id" element={<NewPage />} />
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </StrictMode>
 );

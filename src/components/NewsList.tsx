@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { NewsState } from "../slices/NewsSlice";
 import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   const now = new Date();
@@ -74,16 +75,18 @@ export const NewsList = ({
             </>
           }
         >
-          <ListItemText
-            primary={newItem.title}
-            secondary={
-              <>
-                <Typography component="span" variant="body2" color="gray">
-                  Создано: {formatDate(newItem.created_at)}
-                </Typography>
-              </>
-            }
-          />
+          <Link to={`/${newItem.id}`}>
+            <ListItemText
+              primary={newItem.title}
+              secondary={
+                <>
+                  <Typography component="span" variant="body2" color="gray">
+                    Создано: {formatDate(newItem.created_at)}
+                  </Typography>
+                </>
+              }
+            />
+          </Link>
         </ListItem>
       ))}
     </List>
