@@ -68,17 +68,31 @@ export const NewPage = () => {
           width: 800,
           height: 500,
           borderRadius: 5,
+          flexWrap: "wrap",
         }}
       >
         <CardContent
-          sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            textWrap: "wrap",
+          }}
         >
           <Typography variant="h3" sx={{ mb: 1 }}>
             Новость
           </Typography>
           <Divider sx={{ backgroundColor: "gray", mb: 2 }} />
 
-          <Typography variant="h5" sx={{ mb: 1 }}>
+          <Typography
+            variant="h5"
+            sx={{
+              mb: 2,
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+              overflow: "hidden",
+            }}
+          >
             {currentNew.title}
           </Typography>
           <Typography variant="body1" sx={{ flexGrow: 1 }}>
@@ -87,7 +101,7 @@ export const NewPage = () => {
 
           <Divider sx={{ backgroundColor: "gray", my: 2 }} />
           <Box
-            display="flex"
+            display="flex "
             justifyContent="space-between"
             alignItems="center"
           >
@@ -99,7 +113,7 @@ export const NewPage = () => {
               Назад
             </Button>
             <Typography variant="body2" color="gray">
-              Создано: {formatDate(currentNew.created_at)}
+              {formatDate(currentNew.created_at)}
             </Typography>
           </Box>
         </CardContent>

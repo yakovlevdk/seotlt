@@ -1,8 +1,17 @@
-import { Button, FormControl, Input, InputLabel } from "@mui/material";
+import {
+  Alert,
+  Button,
+  FormControl,
+  Input,
+  InputLabel,
+  OutlinedInput,
+  Snackbar,
+} from "@mui/material";
 import { addNew, editNew, NewsState } from "../slices/NewsSlice";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import SnackbarContent from "@mui/material/SnackbarContent";
 export const CreateForm = ({
   editNews,
   setEditNews,
@@ -14,6 +23,7 @@ export const CreateForm = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isEdit, setIsEdit] = useState(!!editNews);
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
   useEffect(() => {
     if (editNews) {
       setTitle(editNews.title);
@@ -56,6 +66,7 @@ export const CreateForm = ({
 
     setTitle("");
     setDescription("");
+    setIsOpenAlert(true);
   };
   return (
     <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
@@ -63,18 +74,22 @@ export const CreateForm = ({
         <InputLabel htmlFor="title" sx={{ color: "white" }}>
           Название новости
         </InputLabel>
-        <Input
+        <OutlinedInput
           id="title"
+          label="Название новости"
           aria-describedby="title-helper-text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           sx={{
             color: "white",
-            "& .MuiInput-underline:before": { borderBottomColor: "white" },
-            "& .MuiInput-underline:hover:before": {
-              borderBottomColor: "white",
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#132B43" },
+
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#1876D2",
             },
-            "& .MuiInput-underline:after": { borderBottomColor: "white" },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#1876D2",
+            },
           }}
         />
       </FormControl>
@@ -83,10 +98,21 @@ export const CreateForm = ({
         <InputLabel htmlFor="description" sx={{ color: "white" }}>
           Описание новости
         </InputLabel>
-        <Input
+        <OutlinedInput
           id="description"
+          label="Описание новости"
           aria-describedby="description-helper-text"
-          sx={{ color: "white" }}
+          sx={{
+            color: "white",
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#132B43" },
+
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#1876D2",
+            },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#1876D2",
+            },
+          }}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -109,6 +135,21 @@ export const CreateForm = ({
           Редактировать
         </Button>
       )}
+      <Snackbar
+        open={isOpenAlert}
+        autoHideDuration={2000}
+        onClose={() => setIsOpenAlert(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setIsOpenAlert(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Успешно!
+        </Alert>
+      </Snackbar>
     </form>
   );
 };
